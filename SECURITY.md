@@ -2,7 +2,7 @@
 
 ## Scope
 
-This policy covers the `fundkeep-indexer` service: the event poller and its REST API. Contract-level security lives in [`fundkeep-contract`](https://github.com/Michealshodipo56/fundkeep-contract)'s own `SECURITY.md`.
+This policy covers the `fundkeep-indexer` service: the event poller and its REST API. Contract-level security lives in [`fundkeep-contract`](https://github.com/fundkeep-web/fundkeep-contract)'s own `SECURITY.md`.
 
 The indexer is read-only with respect to the chain — it never holds a signing key and never submits transactions. Its database is a derived cache of on-chain events; it is never the source of truth, and can always be rebuilt by re-polling from the contract's deployment ledger.
 
