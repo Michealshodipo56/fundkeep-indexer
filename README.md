@@ -1,8 +1,10 @@
 # fundkeep-indexer
 
-Indexes events from the [fundkeep-contract](https://github.com/Michealshodipo56/fundkeep-contract) Soroban contract into SQLite, and serves them over a small REST API for [fundkeep-app](https://github.com/Michealshodipo56/fundkeep-app)'s dashboard and activity feed.
+Indexes events from the [fundkeep-contract](https://github.com/fundkeep-web/fundkeep-contract) Soroban contract into SQLite, and serves them over a small REST API for [fundkeep-app](https://github.com/fundkeep-web/fundkeep-app)'s dashboard and activity feed.
 
 This is the read side of the topology: the frontend writes directly to the chain via RPC (see `@fundkeep/sdk`), and reads goal/activity history from here instead of re-deriving it from raw events client-side.
+
+**Live Testnet service:** [fundkeep-indexer.onrender.com/health](https://fundkeep-indexer.onrender.com/health) · **Contract:** [`CBYUM...DDFAH`](https://stellar.expert/explorer/testnet/contract/CBYUMUNDBGT5JTYX62SSFH5NTK2ELLRT2PP3LLZOI757JB4BULDDDFAH) · **App:** [fundkeep.vercel.app](https://fundkeep.vercel.app)
 
 ## How it works
 
@@ -44,4 +46,4 @@ npm run typecheck      # tsc --noEmit
 
 ## Deploying
 
-Runs as a normal long-running Node service (e.g. Render): build command `npm install && npm run build`, start command `npm start`. Point `DB_PATH` at a persistent disk if the platform doesn't give you one by default — otherwise the SQLite file (and the indexer's sync cursor) resets on every deploy.
+The committed [`render.yaml`](render.yaml) is the authoritative Render Blueprint. It uses Node 22, a health check, the verified contract allowlist, restrictive production CORS and a persistent disk for SQLite. The disk is required: without it, both indexed data and the ledger cursor reset on every deploy.

@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: fundkeep-indexer
+    runtime: node
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: CONTRACT_ID
+        value: CBYUMUNDBGT5JTYX62SSFH5NTK2ELLRT2PP3LLZOI757JB4BULDDDFAH
+      - key: RPC_URL
+        value: https://soroban-testnet.stellar.org
+      - key: NETWORK_PASSPHRASE
+        value: Test SDF Network ; September 2015
+      - key: CORS_ORIGINS
+        value: https://fundkeep.vercel.app
+      - key: DB_PATH
+        value: /opt/render/project/src/data/fundkeep.db
+      - key: EVENTS_BACKFILL_LEDGERS
+        value: 1000
+      - key: POLL_INTERVAL_MS
+        value: 5000
+    disk:
+      name: fundkeep-indexer-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
